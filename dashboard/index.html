@@ -2,11 +2,41 @@
 <html>
 <head>
     <title>Dashboard Banco Digital</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<h1>Dashboard Financeiro</h1>
-<p>Projeto em construção</p>
+<h1>📊 Evolução da Taxa SELIC</h1>
+
+<canvas id="chart" width="800" height="400"></canvas>
+
+<script>
+fetch('data.csv')
+    .then(response => response.text())
+    .then(csv => {
+        const rows = csv.split('\n').slice(1);
+
+        const labels = [];
+        const values = [];
+
+        rows.forEach(row => {
+            const cols = row.split(',');
+            labels.push(cols[0]);
+            values.push(parseFloat(cols[1]));
+        });
+
+        new Chart(document.getElementById('chart'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'SELIC média mensal',
+                    data: values
+                }]
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
