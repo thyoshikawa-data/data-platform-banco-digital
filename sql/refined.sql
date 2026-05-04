@@ -1,6 +1,10 @@
 -- Camada REFINED
-CREATE TABLE TRUSTED_SELIC AS
+CREATE TABLE REFINED_SELIC_MENSAL AS
 SELECT 
-    TO_DATE(data_raw, 'YYYY-MM-DD') AS data,
-    TO_NUMBER(valor_raw) AS valor
-FROM RAW_SELIC;
+    TRUNC(data, 'MM') AS mes,
+    AVG(valor) AS media_selic,
+    MIN(valor) AS min_selic,
+    MAX(valor) AS max_selic
+FROM TRUSTED_SELIC
+GROUP BY TRUNC(data, 'MM')
+ORDER BY mes;
