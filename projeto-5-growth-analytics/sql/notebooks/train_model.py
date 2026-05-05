@@ -7,7 +7,7 @@ df = pd.read_csv("../data/raw.csv")
 
 features = build_features(df)
 
-# TARGET (igual seu código)
+# TARGET
 features['target_7d'] = (features['recency'] <= 7).astype(int)
 features['target_30d'] = (features['recency'] <= 30).astype(int)
 
