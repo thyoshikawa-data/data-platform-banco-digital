@@ -8,9 +8,24 @@ A proposta é demonstrar, de forma prática, como estruturar ingestão, transfor
 ---
 
 ## Arquitetura
+```mermaid
+flowchart LR
+    A[API Banco Central] --> B[Python Ingestion]
+    B --> C[RAW_SELIC]
 
-API → Python → Oracle → Camadas de dados → Dashboard HTML
+    C --> D[Tratamento SQL]
+    D --> E[TRUSTED_SELIC]
 
+    E --> F[Agregações / Métricas]
+    F --> G[REFINED_SELIC]
+
+    G --> H[Export CSV]
+    H --> I[Dashboard HTML]
+
+    style C fill:#1f2937,color:#fff
+    style E fill:#374151,color:#fff
+    style G fill:#4b5563,color:#fff
+```
 ---
 
 ## Tecnologias utilizadas
