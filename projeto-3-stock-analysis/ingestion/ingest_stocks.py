@@ -1,23 +1,37 @@
+import os
 import pandas as pd
 import oracledb
 from datetime import datetime
 
-# carregar CSV
+# =========================
+# CONFIG VIA ENV
+# =========================
+
+DB_CONFIG = {
+    "user": os.getenv("DB_USER"),
+    "password": os.getenv("DB_PASSWORD"),
+    "dsn": os.getenv("DB_DSN")
+}
+
+# =========================
+# LOAD CSV
+# =========================
+
 df = pd.read_csv("data/stocks_raw.csv")
 
-# ajustar colunas
 df.columns = ["ticker", "date", "open", "high", "low", "close", "volume"]
-
 df['date'] = pd.to_datetime(df['date'])
 
-# conexão
-conn = oracledb.connect(
-    user="SEU_USER",
-    password="SUA_SENHA",
-    dsn="oracle.fiap.com.br:1521/ORCL"
-)
+# =========================
+# CONEXÃO
+# =========================
 
+conn = oracledb.connect(**DB_CONFIG)
 cursor = conn.cursor()
+
+# =========================
+# INSERT
+# =========================
 
 for _, row in df.iterrows():
     cursor.execute("""
@@ -36,5 +50,6 @@ for _, row in df.iterrows():
     ])
 
 conn.commit()
+
 cursor.close()
 conn.close()
