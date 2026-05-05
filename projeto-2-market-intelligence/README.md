@@ -8,7 +8,21 @@ Analisar o volume e o tema das notícias relacionadas a indicadores econômicos 
 
 ## Arquitetura
 
-SerpAPI → Python → Oracle → RAW → TRUSTED → REFINED
+```mermaid
+flowchart LR
+    A[SerpAPI Notícias] --> B[Python Ingestion]
+    B --> C[RAW_NOTICIAS]
+
+    C --> D[Lower / Clean Text]
+    D --> E[TRUSTED_NOTICIAS]
+
+    E --> F[Classificação por Tema]
+    F --> G[REFINED_NOTICIAS]
+
+    G --> H[Insights]
+    H --> I[Dashboard]
+
+```
 
 ## Tecnologias
 - Python
