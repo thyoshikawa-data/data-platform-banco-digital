@@ -1,4 +1,4 @@
-# Portfolio Thales Yoshikawa
+# Data Platform Portfolio
 
 ## Visão Geral
 
